@@ -1,8 +1,7 @@
-
 export interface User {
   id: number;
   name: string;
-  avatar: 'robot' | 'dragon';
+  avatar: 'robot' | 'dragon' | 'princess' | 'rainbow' | 'unicorn' | 'cat' | 'rabbit';
 }
 
 export interface Story {

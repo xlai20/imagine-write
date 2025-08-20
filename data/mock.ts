@@ -1,9 +1,13 @@
-
 import { User, Story } from '../types';
 
 export const MOCK_USERS: User[] = [
-  { id: 1, name: 'Anya', avatar: 'dragon' },
-  { id: 2, name: 'Ben', avatar: 'robot' },
+  { id: 1, name: 'Estella', avatar: 'rainbow' },
+  { id: 2, name: 'Nova', avatar: 'princess' },
+  { id: 3, name: 'Olivia', avatar: 'rabbit' },
+  { id: 4, name: 'Derek', avatar: 'dragon' },
+  { id: 5, name: 'Mia', avatar: 'unicorn' },
+  { id: 6, name: 'Chloe', avatar: 'cat' },
+  { id: 7, name: 'Max', avatar: 'robot' },
 ];
 
 export const MOCK_STORIES: Story[] = [

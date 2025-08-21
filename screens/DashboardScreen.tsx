@@ -7,18 +7,26 @@ import Spinner from '../components/common/Spinner';
 import { generateWritingPrompt, generateImage } from '../services/geminiService';
 import StarIcon from '../components/icons/StarIcon';
 
+interface PromptData {
+  prompt: string;
+  theme: string;
+  topic: string;
+  keywords: string[];
+}
+
 const DashboardScreen: React.FC = () => {
   const { currentUser, setCurrentScreen, setCurrentStory } = useAppContext();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [promptData, setPromptData] = useState<{ prompt: string; theme: string; topic: string; } | null>(null);
+  const [promptData, setPromptData] = useState<PromptData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetchPromptAndImage = useCallback(async () => {
+    if (!currentUser) return;
     setLoading(true);
     try {
-      const writingPromptData = await generateWritingPrompt();
+      const writingPromptData = await generateWritingPrompt(currentUser.age);
       setPromptData(writingPromptData);
-      const generatedImageUrl = await generateImage(writingPromptData.prompt);
+      const generatedImageUrl = await generateImage(writingPromptData.prompt, currentUser.age);
       setImageUrl(generatedImageUrl);
     } catch (error) {
       console.error("Failed to load prompt and image", error);
@@ -26,26 +34,30 @@ const DashboardScreen: React.FC = () => {
       setPromptData({
         prompt: 'A magical castle in the clouds.',
         theme: 'Fantasy & Adventure',
-        topic: 'Castle in the Sky'
+        topic: 'Castle in the Sky',
+        keywords: ['castle', 'clouds', 'magic', 'fly', 'secret']
       });
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
     fetchPromptAndImage();
   }, [fetchPromptAndImage]);
 
   const handleStartWriting = () => {
-    if (imageUrl && promptData) {
+    if (imageUrl && promptData && currentUser) {
       setCurrentStory({ 
           // Temporary story object
           id: 0,
-          userId: currentUser!.id,
+          userId: currentUser.id,
           date: '',
           imagePromptUrl: imageUrl, 
           imagePromptQuery: promptData.prompt, 
+          theme: promptData.theme,
+          topic: promptData.topic,
+          keywords: promptData.keywords,
           text: '', 
           feedback: { score: 0, message: '', correctedText: '' } 
       });
@@ -79,6 +91,13 @@ const DashboardScreen: React.FC = () => {
                     <p className="font-sans text-sm font-bold text-primary-blue tracking-wider uppercase">{promptData.theme}</p>
                 </div>
                 <h1 className="font-patrickHand text-4xl md:text-5xl text-text-dark px-4">{promptData.topic}</h1>
+                <div className="mt-4 flex flex-wrap justify-center gap-2 px-4">
+                  {promptData.keywords.map((keyword) => (
+                    <span key={keyword} className="bg-positive-green/10 text-positive-green font-semibold px-3 py-1 rounded-full text-sm border-2 border-positive-green/20">
+                      {keyword}
+                    </span>
+                  ))}
+                </div>
             </div>
         )}
 

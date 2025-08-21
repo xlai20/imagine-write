@@ -8,17 +8,20 @@ import Spinner from '../components/common/Spinner';
 import BookIcon from '../components/icons/BookIcon';
 
 const WritingScreen: React.FC = () => {
-  const { currentStory, addStory, setCurrentScreen, setIsLoading, isLoading } = useAppContext();
+  const { currentStory, addStory, setCurrentScreen, setIsLoading, isLoading, currentUser } = useAppContext();
   const [text, setText] = useState('');
 
   const handleSubmit = useCallback(async () => {
-    if (!currentStory || text.trim().length === 0) return;
+    if (!currentStory || text.trim().length === 0 || !currentUser) return;
     setIsLoading(true);
     try {
-      const feedback = await getFeedbackForStory(text);
+      const feedback = await getFeedbackForStory(text, currentUser.age);
       addStory({
         imagePromptUrl: currentStory.imagePromptUrl,
         imagePromptQuery: currentStory.imagePromptQuery,
+        theme: currentStory.theme,
+        topic: currentStory.topic,
+        keywords: currentStory.keywords,
         text: text,
         feedback: feedback,
       });
@@ -28,7 +31,7 @@ const WritingScreen: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [currentStory, text, setIsLoading, addStory, setCurrentScreen]);
+  }, [currentStory, text, setIsLoading, addStory, setCurrentScreen, currentUser]);
 
   if (!currentStory) {
     return (
@@ -46,13 +49,27 @@ const WritingScreen: React.FC = () => {
             <Spinner text="Analyzing your story..." />
         </div>
       )}
-      {/* Left Column: Image */}
-      <div className="w-full md:w-[40%] h-64 md:h-screen p-6 flex items-center justify-center sticky top-0">
+      {/* Left Column: Image & Prompt Info */}
+      <div className="w-full md:w-[40%] h-auto md:h-screen p-6 flex flex-col gap-6 sticky top-0">
         <img
           src={currentStory.imagePromptUrl}
           alt="Writing prompt"
-          className="w-full h-full object-contain rounded-2xl shadow-lg"
+          className="w-full h-auto aspect-[16/9] object-contain rounded-2xl shadow-lg"
         />
+        <div className="bg-white/60 rounded-2xl p-4 text-center">
+            <h3 className="text-xl font-bold text-text-dark/80">Your Writing Quest</h3>
+            <div className="inline-block bg-primary-blue/10 rounded-full px-4 py-1 mt-3 border border-primary-blue/20">
+                <p className="font-sans text-xs font-bold text-primary-blue tracking-wider uppercase">{currentStory.theme}</p>
+            </div>
+            <h2 className="font-patrickHand text-3xl text-text-dark mt-1">{currentStory.topic}</h2>
+            <div className="mt-3 flex flex-wrap justify-center gap-2">
+              {currentStory.keywords.map((keyword) => (
+                <span key={keyword} className="bg-positive-green/10 text-positive-green font-semibold px-2 py-0.5 rounded-full text-xs border border-positive-green/20">
+                  {keyword}
+                </span>
+              ))}
+            </div>
+        </div>
       </div>
 
       {/* Right Column: Text Area */}

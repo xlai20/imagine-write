@@ -18,7 +18,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ story, onClick }) => {
       <div className="p-4 flex-grow flex flex-col justify-between">
         <div>
             <p className="text-lg text-text-dark/80">{story.date}</p>
-            <p className="text-base text-text-dark/60 mt-2 truncate italic">"{story.imagePromptQuery}"</p>
+            <p className="font-patrickHand text-2xl text-text-dark mt-2 truncate">{story.topic}</p>
         </div>
         <div className="flex items-center gap-2 mt-4 self-end">
             <div className="relative w-8 h-8">

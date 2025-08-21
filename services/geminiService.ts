@@ -1,7 +1,7 @@
 
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
 import { Feedback } from "../types";
-import { generateDynamicWritingPrompt, FEEDBACK_SYSTEM_INSTRUCTION } from "../data/prompts";
+import { generateDynamicWritingPrompt, getFeedbackSystemInstruction } from "../data/prompts";
 
 const API_KEY = process.env.API_KEY;
 
@@ -19,16 +19,17 @@ const generateMockFeedback = (story: string): Feedback => ({
     correctedText: story.replace(/ a /g, " a **very** "),
 });
 
-export const generateWritingPrompt = async (): Promise<{ prompt: string; theme: string; topic: string; }> => {
+export const generateWritingPrompt = async (age: number): Promise<{ prompt: string; theme: string; topic: string; keywords: string[]; }> => {
   if (!API_KEY) {
     return { 
         prompt: "A friendly dragon flying a colorful kite on a sunny day.",
         theme: "Fantasy & Adventure",
-        topic: "A Friendly Dragon"
+        topic: "A Friendly Dragon",
+        keywords: ["dragon", "fly", "kite", "sunny", "gentle", "friend"]
     };
   }
   try {
-    const { aiPrompt, themeName, topicTitle } = generateDynamicWritingPrompt();
+    const { aiPrompt, themeName, topicTitle, keywords } = generateDynamicWritingPrompt(age);
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: aiPrompt,
@@ -36,26 +37,29 @@ export const generateWritingPrompt = async (): Promise<{ prompt: string; theme: 
     return { 
         prompt: response.text.trim(), 
         theme: themeName, 
-        topic: topicTitle 
+        topic: topicTitle,
+        keywords: keywords,
     };
   } catch (error) {
     console.error("Error generating writing prompt:", error);
     return {
         prompt: "A group of animals having a picnic on the moon.",
         theme: "Fantasy & Adventure",
-        topic: "Space Picnic"
+        topic: "Space Picnic",
+        keywords: ["animals", "picnic", "moon", "rocket", "stars", "fun"]
     };
   }
 };
 
-export const generateImage = async (prompt: string): Promise<string> => {
+export const generateImage = async (prompt: string, age: number): Promise<string> => {
     if (!API_KEY) {
         return MOCK_IMAGE_URL;
     }
     try {
+        const finalPrompt = `A whimsical and colorful illustration suitable for a ${age}-year-old child. Scene: ${prompt}`;
         const response = await ai.models.generateImages({
             model: 'imagen-3.0-generate-002',
-            prompt: prompt,
+            prompt: finalPrompt,
             config: {
                 numberOfImages: 1,
                 outputMimeType: 'image/jpeg',
@@ -75,7 +79,7 @@ export const generateImage = async (prompt: string): Promise<string> => {
     }
 };
 
-export const getFeedbackForStory = async (story: string): Promise<Feedback> => {
+export const getFeedbackForStory = async (story: string, age: number): Promise<Feedback> => {
     if (!API_KEY) {
         return generateMockFeedback(story);
     }
@@ -84,7 +88,7 @@ export const getFeedbackForStory = async (story: string): Promise<Feedback> => {
             model: "gemini-2.5-flash",
             contents: `Here is the story: "${story}"`,
             config: {
-                systemInstruction: FEEDBACK_SYSTEM_INSTRUCTION,
+                systemInstruction: getFeedbackSystemInstruction(age),
                 responseMimeType: "application/json",
                 responseSchema: {
                     type: Type.OBJECT,

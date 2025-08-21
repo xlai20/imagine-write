@@ -44,6 +44,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ user, onClick }) => {
       <div className="flex flex-col items-center justify-center h-full p-4">
         {renderAvatar()}
         <h2 className="text-3xl font-bold text-text-dark mt-4">{user.name}</h2>
+        <p className="text-lg text-text-dark/70 font-semibold">Age: {user.age}</p>
       </div>
     </button>
   );

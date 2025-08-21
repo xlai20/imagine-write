@@ -1,5 +1,30 @@
+import { THEMES } from './themes';
 
-export const WRITING_PROMPT_GENERATION_PROMPT = `Generate a short, simple, and imaginative writing prompt for a 7-year-old child. It should be a single sentence describing a fun scene. For example: "A baby unicorn learning to fly in a field of glowing flowers."`;
+export const generateDynamicWritingPrompt = (): { aiPrompt: string; themeName: string; topicTitle: string; } => {
+  // 1. Pick a random theme
+  const randomThemeIndex = Math.floor(Math.random() * THEMES.length);
+  const selectedTheme = THEMES[randomThemeIndex];
+
+  // 2. Pick a random topic from that theme
+  const randomTopicIndex = Math.floor(Math.random() * selectedTheme.topics.length);
+  const selectedTopic = selectedTheme.topics[randomTopicIndex];
+
+  // 3. Construct the prompt for the AI
+  const keywords = selectedTopic.keywords.join(', ');
+  const prompt = `Generate a short, simple, and imaginative writing prompt for a 7-year-old child. It must be a single sentence describing a fun and engaging scene.
+Theme: "${selectedTheme.name}"
+Topic: "${selectedTopic.title}"
+Keywords to inspire the prompt: "${keywords}"
+
+The final output should be ONLY the single sentence prompt, nothing else.`;
+  
+  return {
+    aiPrompt: prompt,
+    themeName: selectedTheme.name,
+    topicTitle: selectedTopic.title,
+  };
+};
+
 
 export const FEEDBACK_SYSTEM_INSTRUCTION = `You are an encouraging and helpful tutor for a child aged 7-10. Analyze the child's story.
 1.  Provide a score from 1 to 10 based on creativity, grammar, and length.

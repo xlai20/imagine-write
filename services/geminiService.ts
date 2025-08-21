@@ -1,7 +1,7 @@
 
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
 import { Feedback } from "../types";
-import { WRITING_PROMPT_GENERATION_PROMPT, FEEDBACK_SYSTEM_INSTRUCTION } from "../data/prompts";
+import { generateDynamicWritingPrompt, FEEDBACK_SYSTEM_INSTRUCTION } from "../data/prompts";
 
 const API_KEY = process.env.API_KEY;
 
@@ -19,19 +19,32 @@ const generateMockFeedback = (story: string): Feedback => ({
     correctedText: story.replace(/ a /g, " a **very** "),
 });
 
-export const generateWritingPrompt = async (): Promise<string> => {
+export const generateWritingPrompt = async (): Promise<{ prompt: string; theme: string; topic: string; }> => {
   if (!API_KEY) {
-    return "A friendly dragon flying a colorful kite on a sunny day.";
+    return { 
+        prompt: "A friendly dragon flying a colorful kite on a sunny day.",
+        theme: "Fantasy & Adventure",
+        topic: "A Friendly Dragon"
+    };
   }
   try {
+    const { aiPrompt, themeName, topicTitle } = generateDynamicWritingPrompt();
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
-      contents: WRITING_PROMPT_GENERATION_PROMPT,
+      contents: aiPrompt,
     });
-    return response.text.trim();
+    return { 
+        prompt: response.text.trim(), 
+        theme: themeName, 
+        topic: topicTitle 
+    };
   } catch (error) {
     console.error("Error generating writing prompt:", error);
-    return "A group of animals having a picnic on the moon.";
+    return {
+        prompt: "A group of animals having a picnic on the moon.",
+        theme: "Fantasy & Adventure",
+        topic: "Space Picnic"
+    };
   }
 };
 

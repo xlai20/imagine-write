@@ -10,20 +10,24 @@ import StarIcon from '../components/icons/StarIcon';
 const DashboardScreen: React.FC = () => {
   const { currentUser, setCurrentScreen, setCurrentStory } = useAppContext();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [prompt, setPrompt] = useState<string>('');
+  const [promptData, setPromptData] = useState<{ prompt: string; theme: string; topic: string; } | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetchPromptAndImage = useCallback(async () => {
     setLoading(true);
     try {
-      const writingPrompt = await generateWritingPrompt();
-      setPrompt(writingPrompt);
-      const generatedImageUrl = await generateImage(writingPrompt);
+      const writingPromptData = await generateWritingPrompt();
+      setPromptData(writingPromptData);
+      const generatedImageUrl = await generateImage(writingPromptData.prompt);
       setImageUrl(generatedImageUrl);
     } catch (error) {
       console.error("Failed to load prompt and image", error);
       setImageUrl('https://picsum.photos/800/500'); // Fallback image
-      setPrompt('A magical castle in the clouds.');
+      setPromptData({
+        prompt: 'A magical castle in the clouds.',
+        theme: 'Fantasy & Adventure',
+        topic: 'Castle in the Sky'
+      });
     } finally {
       setLoading(false);
     }
@@ -34,14 +38,14 @@ const DashboardScreen: React.FC = () => {
   }, [fetchPromptAndImage]);
 
   const handleStartWriting = () => {
-    if (imageUrl && prompt) {
+    if (imageUrl && promptData) {
       setCurrentStory({ 
           // Temporary story object
           id: 0,
           userId: currentUser!.id,
           date: '',
           imagePromptUrl: imageUrl, 
-          imagePromptQuery: prompt, 
+          imagePromptQuery: promptData.prompt, 
           text: '', 
           feedback: { score: 0, message: '', correctedText: '' } 
       });
@@ -65,10 +69,20 @@ const DashboardScreen: React.FC = () => {
               <Spinner text="Imagining your prompt..." />
             </div>
           ) : (
-            <img src={imageUrl ?? ''} alt="AI-generated writing prompt" className="w-full aspect-[16/9] object-cover rounded-2xl"/>
+            <img src={imageUrl ?? ''} alt={promptData?.prompt ?? 'AI-generated writing prompt'} className="w-full aspect-[16/9] object-cover rounded-2xl"/>
           )}
         </div>
-        <div className="relative mt-12">
+
+        {!loading && promptData && (
+            <div className="mt-6 text-center max-w-4xl w-full">
+                <div className="inline-block bg-primary-blue/10 rounded-full px-5 py-1 mb-3 border-2 border-primary-blue/20">
+                    <p className="font-sans text-sm font-bold text-primary-blue tracking-wider uppercase">{promptData.theme}</p>
+                </div>
+                <h1 className="font-patrickHand text-4xl md:text-5xl text-text-dark px-4">{promptData.topic}</h1>
+            </div>
+        )}
+
+        <div className="relative mt-8">
             <Button variant="red" onClick={handleStartWriting} disabled={loading}>
                 Start Writing!
             </Button>

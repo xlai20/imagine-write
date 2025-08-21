@@ -1,6 +1,7 @@
 
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
 import { Feedback } from "../types";
+import { WRITING_PROMPT_GENERATION_PROMPT, FEEDBACK_SYSTEM_INSTRUCTION } from "../data/prompts";
 
 const API_KEY = process.env.API_KEY;
 
@@ -25,7 +26,7 @@ export const generateWritingPrompt = async (): Promise<string> => {
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
-      contents: 'Generate a short, simple, and imaginative writing prompt for a 7-year-old child. It should be a single sentence describing a fun scene. For example: "A baby unicorn learning to fly in a field of glowing flowers."',
+      contents: WRITING_PROMPT_GENERATION_PROMPT,
     });
     return response.text.trim();
   } catch (error) {
@@ -66,16 +67,11 @@ export const getFeedbackForStory = async (story: string): Promise<Feedback> => {
         return generateMockFeedback(story);
     }
     try {
-        const systemInstruction = `You are an encouraging and helpful tutor for a child aged 7-10. Analyze the child's story.
-        1.  Provide a score from 1 to 10 based on creativity, grammar, and length.
-        2.  Write a short, positive, and encouraging message.
-        3.  Provide the corrected version of the text. In the corrected text, use markdown: wrap deleted words or punctuation in ~~strikethrough~~ and wrap added or corrected words in **bold**. Only make necessary corrections for spelling and basic grammar. Keep it simple for a child.`;
-
         const response: GenerateContentResponse = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: `Here is the story: "${story}"`,
             config: {
-                systemInstruction: systemInstruction,
+                systemInstruction: FEEDBACK_SYSTEM_INSTRUCTION,
                 responseMimeType: "application/json",
                 responseSchema: {
                     type: Type.OBJECT,

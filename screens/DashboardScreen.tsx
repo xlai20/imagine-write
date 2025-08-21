@@ -59,7 +59,22 @@ const DashboardScreen: React.FC = () => {
           topic: promptData.topic,
           keywords: promptData.keywords,
           text: '', 
-          feedback: { score: 0, message: '', correctedText: '' } 
+          feedback: {
+            overallAssessment: '',
+            strengths: '',
+            areasForImprovement: {
+              grammar: '',
+              vocabulary: '',
+            },
+            correctedText: '',
+            scoringBreakdown: {
+              creativity: 0,
+              grammar: 0,
+              vocabulary: 0,
+              structure: 0,
+            },
+            concludingStatement: '',
+          },
       });
       setCurrentScreen(Screen.WRITING);
     }

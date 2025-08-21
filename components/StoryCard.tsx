@@ -9,6 +9,9 @@ interface StoryCardProps {
 }
 
 const StoryCard: React.FC<StoryCardProps> = ({ story, onClick }) => {
+  const { creativity, grammar, vocabulary, structure } = story.feedback.scoringBreakdown;
+  const averageScore = Math.round((creativity + grammar + vocabulary + structure) / 4);
+
   return (
     <div 
         onClick={onClick}
@@ -23,7 +26,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ story, onClick }) => {
         <div className="flex items-center gap-2 mt-4 self-end">
             <div className="relative w-8 h-8">
                 <StarIcon className="text-star-yellow fill-current" points={5} />
-                <span className="absolute inset-0 flex items-center justify-center text-xs font-bold text-text-dark">{story.feedback.score}</span>
+                <span className="absolute inset-0 flex items-center justify-center text-xs font-bold text-text-dark">{averageScore}</span>
             </div>
         </div>
       </div>

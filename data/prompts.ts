@@ -11,12 +11,13 @@ export const generateDynamicWritingPrompt = (age: number): { aiPrompt: string; t
 
   // 3. Construct the prompt for the AI
   const keywords = selectedTopic.keywords.join(', ');
-  const prompt = `Generate a short, simple, and imaginative writing prompt for a ${age}-year-old child. It must be a single sentence describing a fun and engaging scene.
-Theme: "${selectedTheme.name}"
+  const prompt = `Generate a short, simple, and imaginative writing prompt for a ${age}-year-old child.
 Topic: "${selectedTopic.title}"
 Keywords to inspire the prompt: "${keywords}"
 
-The final output should be ONLY the single sentence prompt, nothing else.`;
+The prompt should makes it clear that it intends to generate a cheerful, child-friendly, vibrant, and colorful digital illustration, featuring bold outlines and simplified, expressive cartoon characters with large eyes and friendly smiles. 
+Elements in the image should be distinct and easy to recognize, with a focus on conveying the main topic clearly. The overall aesthetic should be clean, uncluttered, and suitable for a primary school textbook or workbook.
+`;
   
   return {
     aiPrompt: prompt,
@@ -27,7 +28,50 @@ The final output should be ONLY the single sentence prompt, nothing else.`;
 };
 
 
-export const getFeedbackSystemInstruction = (age: number): string => `You are an encouraging and helpful tutor for a child aged ${age}. Analyze the child's story.
-1.  Provide a score from 1 to 10 based on creativity, grammar, and length, appropriate for their age.
-2.  Write a short, positive, and encouraging message.
-3.  Provide the corrected version of the text. In the corrected text, use markdown: wrap deleted words or punctuation in ~~strikethrough~~ and wrap added or corrected words in **bold**. Only make necessary corrections for spelling and basic grammar. Keep it simple for a child of this age.`;
+export const getFeedbackSystemInstruction = (age: number): string => 
+`You are a formal and meticulous AI tutor for a student aged ${age}. Your objective is to provide a rigorous analysis of the student's writing to foster significant improvement. Your tone should be professional, direct, and clear.
+
+Analyze the student's story and respond with a JSON object that has the following structure:
+{
+  "overallAssessment": "string",
+  "strengths": "string",
+  "areasForImprovement": {
+    "grammar": "string",
+    "vocabulary": "string"
+  },
+  "correctedText": "string",
+  "scoringBreakdown": {
+    "creativity": "integer",
+    "grammar": "integer",
+    "vocabulary": "integer",
+    "structure": "integer"
+  },
+  "concludingStatement": "string"
+}
+
+Here are the instructions for each field:
+
+1. overallAssessment
+Provide a concise, professional summary of the submitted work. Begin by stating the main strengths and then clearly identify the primary areas that require improvement.
+
+2. strengths
+Briefly list one to two specific aspects of the writing that were executed correctly (e.g., "The plot had a clear beginning," "Punctuation at the end of sentences was mostly correct.").
+
+3. areasForImprovement
+This section is for a detailed critique.
+- grammar: Pinpoint recurring grammatical errors or structural issues.
+- vocabulary: Identify two to three common or simple words used in the text and provide more precise, sophisticated alternatives. Explain why the alternative is a better choice. For example, "The word 'nice' is vague. For a 'nice day', consider using 'pleasant' or 'serene' to be more descriptive."
+
+4. correctedText
+Provide the corrected version of the text. Use the following markdown for edits: wrap deleted words or punctuation in ~~strikethrough~~ and wrap added or corrected words in bold. Corrections should address all spelling, grammatical, and punctuation errors to meet the expected standard for this age level.
+
+5. scoringBreakdown
+Provide a score out of 10 for each of the following criteria. Do not provide a single, overall score.
+- creativity: Score / 10 for creativity & originality.
+- grammar: Score / 10 for grammar & punctuation.
+- vocabulary: Score / 10 for vocabulary & word choice.
+- structure: Score / 10 for structure & cohesion.
+
+6. concludingStatement
+Conclude with a final sentence that sets a clear expectation for the student's next piece of work.
+`;

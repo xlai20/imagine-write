@@ -14,9 +14,20 @@ const ai = new GoogleGenAI({ apiKey: API_KEY });
 const MOCK_IMAGE_URL = 'https://picsum.photos/seed/mockimage/800/500';
 
 const generateMockFeedback = (story: string): Feedback => ({
-    score: Math.floor(Math.random() * 4) + 7, // Score between 7 and 10
-    message: "Fantastic writing!",
-    correctedText: story.replace(/ a /g, " a **very** "),
+    overallAssessment: "This is a strong foundational piece with a clear narrative. The primary areas for development are in vocabulary expansion and grammatical precision.",
+    strengths: "The plot is imaginative and the story structure is logical.",
+    areasForImprovement: {
+      grammar: "Pay attention to subject-verb agreement. For example, 'he go' should be 'he goes'.",
+      vocabulary: "The word 'good' was used multiple times. Consider more descriptive words like 'wonderful', 'excellent', or 'fantastic'."
+    },
+    correctedText: story.replace(/good/g, "~~good~~ **excellent**"),
+    scoringBreakdown: {
+      creativity: 8,
+      grammar: 7,
+      vocabulary: 6,
+      structure: 8
+    },
+    concludingStatement: "A commendable effort. For the next submission, focus on applying more varied vocabulary."
 });
 
 export const generateWritingPrompt = async (age: number): Promise<{ prompt: string; theme: string; topic: string; keywords: string[]; }> => {
@@ -93,20 +104,30 @@ export const getFeedbackForStory = async (story: string, age: number): Promise<F
                 responseSchema: {
                     type: Type.OBJECT,
                     properties: {
-                        score: {
-                            type: Type.INTEGER,
-                            description: "A score from 1 to 10 for the story.",
+                        overallAssessment: { type: Type.STRING },
+                        strengths: { type: Type.STRING },
+                        areasForImprovement: {
+                            type: Type.OBJECT,
+                            properties: {
+                                grammar: { type: Type.STRING },
+                                vocabulary: { type: Type.STRING },
+                            },
+                            required: ["grammar", "vocabulary"],
                         },
-                        message: {
-                            type: Type.STRING,
-                            description: "A short, encouraging message for the child.",
+                        correctedText: { type: Type.STRING },
+                        scoringBreakdown: {
+                            type: Type.OBJECT,
+                            properties: {
+                                creativity: { type: Type.INTEGER },
+                                grammar: { type: Type.INTEGER },
+                                vocabulary: { type: Type.INTEGER },
+                                structure: { type: Type.INTEGER },
+                            },
+                            required: ["creativity", "grammar", "vocabulary", "structure"],
                         },
-                        correctedText: {
-                            type: Type.STRING,
-                            description: "The original text with corrections in markdown format (~~delete~~, **add**).",
-                        },
+                        concludingStatement: { type: Type.STRING },
                     },
-                    required: ["score", "message", "correctedText"],
+                    required: ["overallAssessment", "strengths", "areasForImprovement", "correctedText", "scoringBreakdown", "concludingStatement"],
                 },
             },
         });

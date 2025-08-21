@@ -18,11 +18,25 @@ export interface Story {
   feedback: Feedback;
 }
 
-export interface Feedback {
-  score: number;
-  message: string;
-  correctedText: string;
+export interface ScoringBreakdown {
+  creativity: number;
+  grammar: number;
+  vocabulary: number;
+  structure: number;
 }
+
+export interface Feedback {
+  overallAssessment: string;
+  strengths: string;
+  areasForImprovement: {
+    grammar: string;
+    vocabulary: string;
+  };
+  correctedText: string;
+  scoringBreakdown: ScoringBreakdown;
+  concludingStatement: string;
+}
+
 
 export enum Screen {
   PROFILE_SELECTOR,

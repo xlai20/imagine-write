@@ -7,6 +7,7 @@ export interface Topic {
 export interface Theme {
   name: string;
   description: string;
+  suitableAges: string;
   topics: Topic[];
 }
 
@@ -14,6 +15,7 @@ export const THEMES: Theme[] = [
     {
         name: "Family and Home",
         description: "This theme focuses on the child's immediate family, home environment, and daily household activities.",
+        suitableAges: "5-8",
         topics: [
             { title: "A Surprise for Mum", keywords: ["birthday", "secret", "bake", "cake", "present", "hide", "happy", "hug", "planning a party", "whispering", "decorations", "balloons", "invitations", "special gift", "wrapped carefully", "excited anticipation", "jump for joy", "a heartfelt card", "unforgettable moment", "glee"] },
             { title: "Helping with Chores", keywords: ["responsible", "sweep", "floor", "wash", "dishes", "tidy", "room", "proud", "household tasks", "organise", "dusting shelves", "folding laundry", "setting the table", "taking out the trash", "sense of accomplishment", "working together", "a helpful child", "making things neat", "gleaming surfaces", "family contribution"] },
@@ -50,6 +52,7 @@ export const THEMES: Theme[] = [
     {
         name: "School Life",
         description: "This theme covers common experiences a child encounters in school, from lessons to friendships and events.",
+        suitableAges: "7-10",
         topics: [
             { title: "My Best Friend in Class", keywords: ["sit beside", "share", "secrets", "play", "recess", "kind", "help", "always together", "understanding", "trustworthy", "inside jokes", "partner in crime", "study buddy", "loyal", "supportive", "through thick and thin", "unbreakable bond", "making each other laugh", "a true friend", "dependable"] },
             { title: "Recess Time!", keywords: ["canteen", "hungry", "queue", "buy", "food", "play", "catch", "bell", "favourite snack", "chatting with friends", "a welcome break", "energy boost", "the bell rings", "back to class", "trading food", "playing games", "short and sweet", "freedom", "playground adventures", "precious minutes"] },
@@ -86,6 +89,7 @@ export const THEMES: Theme[] = [
     {
         name: "Outings and Places",
         description: "This theme is about visiting different places in and around the local area.",
+        suitableAges: "5-10",
         topics: [
             { title: "A Trip to the Zoo", keywords: ["animals", "monkeys", "roar", "cage", "feeding time", "walk", "tired", "exotic creatures", "enclosure", "tram ride", "animal show", "learning about habitats", "conservation", "keeper talks", "a wild adventure", "observing behavior", "a map of the zoo", "souvenir shop", "majestic lion", "playful penguins"] },
             { title: "A Day at the Beach", keywords: ["sunny", "sandcastle", "swim", "waves", "picnic", "shells", "fun", "salty air", "crashing waves", "building moats", "collecting seashells", "cool water", "sunscreen", "barefoot on the sand", "finding crabs", "watching the sunset", "a relaxing day", "refreshing dip", "the tide is coming in", "beach towel"] },
@@ -122,6 +126,7 @@ export const THEMES: Theme[] = [
     {
         name: "Acts of Kindness and Character",
         description: "This theme encourages stories about good values, honesty, and helping others.",
+        suitableAges: "7-10",
         topics: [
             { title: "Finding a Lost Wallet", keywords: ["saw", "wallet", "money", "IC", "return", "police station", "honest", "a moral dilemma", "doing the right thing", "temptation", "a grateful owner", "a sense of integrity", "a good deed", "imagining the owner's panic", "a feeling of relief", "an act of honesty", "a reward", "a clear conscience", "making a difference", "a responsible citizen"] },
             { title: "Helping an Elderly Person", keywords: ["old lady", "carry", "heavy", "cross", "road", "slow", "thank you", "a simple gesture", "patience", "respect for elders", "a warm smile", "a grateful heart", "offering my seat", "a small act of kindness", "making their day easier", "a moment of connection", "compassion", "thoughtfulness", "a helping hand", "a sense of duty"] },
@@ -158,6 +163,7 @@ export const THEMES: Theme[] = [
     {
         name: "Festivals and Celebrations",
         description: "This theme explores the various cultural festivals and personal celebrations experienced in the community.",
+        suitableAges: "6-10",
         topics: [
             { title: "My Birthday Party", keywords: ["cake", "candles", "wish", "presents", "friends", "games", "happy", "invitations", "decorations", "a special day", "the centre of attention", "a year older", "a memorable celebration", "party hats and balloons", "a fun-filled day", "surrounded by loved ones", "a chorus of 'Happy Birthday'", "unwrapping gifts", "a day of joy", "making memories"] },
             { title: "Chinese New Year", keywords: ["red packets", "ang bao", "new clothes", "relatives", "visit", "reunion dinner", "lion dance", "spring cleaning", "good fortune", "zodiac animal", "firecrackers", "a festive atmosphere", "a family tradition", "delicious treats", "a vibrant celebration", "wishing prosperity", "a sea of red", "the sound of drums", "a fresh start", "a cultural heritage"] },
@@ -194,6 +200,7 @@ export const THEMES: Theme[] = [
     {
         name: "Fantasy and Adventure",
         description: "This theme allows children to use their imagination to write about magical and adventurous scenarios.",
+        suitableAges: "5-10",
         topics: [
             { title: "The Magical Treehouse", keywords: ["found", "climb", "secret", "inside", "magical", "adventure", "friends", "a hidden ladder", "a world of its own", "a portal to another dimension", "a mysterious discovery", "a secret club", "an enchanted view", "a journey begins", "a whimsical structure", "a place of wonder", "a gateway to imagination", "a pact of secrecy", "an extraordinary finding", "a treetop sanctuary"] },
             { title: "If I Could Fly", keywords: ["wings", "soar", "sky", "clouds", "birds", "high", "see", "world", "a bird's-eye view", "the freedom of flight", "touching the clouds", "gliding on the wind", "a breathtaking perspective", "above the rooftops", "a race with the eagles", "a feeling of weightlessness", "an incredible journey", "exploring from above", "a dream come true", "an exhilarating experience"] },
@@ -230,6 +237,7 @@ export const THEMES: Theme[] = [
     {
         name: "Nature and Animals",
         description: "This theme focuses on the natural world, weather, plants, and animals (wild and domestic).",
+        suitableAges: "5-8",
         topics: [
             { title: "A Scary Spider", keywords: ["web", "corner", "eight legs", "creepy", "scared", "scream", "trap", "arachnophobia", "a delicate web", "a skillful hunter", "misunderstood creature", "a sudden appearance", "a close encounter", "a tangled mess", "a fascinating predator", "a moment of panic", "a harmless visitor", "observing from a distance", "a surprising discovery", "a lesson in bravery"] },
             { title: "A Beautiful Butterfly", keywords: ["colourful", "wings", "fly", "flower", "nectar", "gentle", "pretty", "metamorphosis", "a delicate dance", "a flash of colour", "a symbol of transformation", "a fluttering beauty", "a moment of wonder", "landing softly", "a fragile creature", "a welcome visitor to the garden", "a sign of a healthy ecosystem", "a joyful sight", "a work of art", "a graceful flight"] },
@@ -266,6 +274,7 @@ export const THEMES: Theme[] = [
     {
         name: "Hobbies and Activities",
         description: "This theme is about the things children do for fun, their talents, and their interests.",
+        suitableAges: "6-10",
         topics: [
             { title: "Learning to Swim", keywords: ["pool", "float", "kick", "splash", "water", "scary", "brave", "fun", "goggles", "deep end", "overcoming fear", "a new skill", "a sense of accomplishment", "building confidence", "a refreshing activity", "the first time I let go", "a patient instructor", "practise makes perfect", "a life-saving skill", "summer fun"] },
             { title: "My Favourite Sport", keywords: ["soccer", "badminton", "run", "ball", "team", "score", "win", "sweat", "teamwork", "competition", "practise", "a thrilling match", "the joy of playing", "a healthy hobby", "sportsmanship", "a passionate player", "a strategic game", "a burst of adrenaline", "a beloved pastime", "a test of skill"] },
@@ -302,6 +311,7 @@ export const THEMES: Theme[] = [
     {
         name: "Food and Meals",
         description: "This theme revolves around food, from favourite dishes and snacks to cooking and eating experiences.",
+        suitableAges: "5-9",
         topics: [
             { title: "My Favourite Food", keywords: ["chicken rice", "noodles", "delicious", "taste", "smell", "eat", "happy", "a mouth-watering dish", "a comforting meal", "a flavour explosion", "a secret family recipe", "a treat for the senses", "a perfect combination of flavours", "a dish I could eat every day", "a culinary delight", "a taste of home", "a simple yet satisfying meal", "a memorable and delicious experience", "a craving that must be satisfied", "a pure and simple joy"] },
             { title: "The Ice Cream Man", keywords: ["bell", "run", "queue", "uncle", "colourful", "cold", "sweet", "melt", "a nostalgic sound", "a welcome treat on a hot day", "a rainbow of flavours", "a race against time", "a sweet and creamy delight", "a childhood memory", "a simple pleasure", "a difficult choice", "a refreshing and delicious snack", "a happy and excited crowd", "a beloved local icon", "a perfect end to the day"] },
@@ -338,6 +348,7 @@ export const THEMES: Theme[] = [
     {
         name: "Oops! A Mishap",
         description: "This theme is about small accidents, mistakes, and unexpected problems that children can write about.",
+        suitableAges: "6-9",
         topics: [
             { title: "I Broke a Plate", keywords: ["kitchen", "slipped", "fell", "broke", "pieces", "loud", "scared", "sorry", "a sudden crash", "a moment of carelessness", "a feeling of guilt", "cleaning up the mess carefully", "a lesson in being careful", "a heartfelt apology", "it was an accident", "a sharp and dangerous shard", "a moment of shock and surprise", "a story of a small disaster", "a memorable and unfortunate event", "a lesson learned the hard way"] },
             { title: "Late for School", keywords: ["woke up", "late", "rushed", "breakfast", "run", "gate", "sorry", "a frantic morning", "a race against time", "a feeling of panic", "a hurried and chaotic start to the day", "the school gate is closing", "a sigh of relief when I finally make it", "a warning from the teacher", "a lesson in time management", "a stressful and unpleasant experience", "a promise to be on time tomorrow", "a day that started off on the wrong foot", "a memorable and chaotic morning", "a story of a morning rush"] },
@@ -364,6 +375,7 @@ export const THEMES: Theme[] = [
     {
         name: "My Community and Helpers",
         description: "This theme focuses on the people, places, and services that make up a child's local community.",
+        suitableAges: "6-9",
         topics: [
             { title: "A Visit to the Fire Station", keywords: ["fire engine", "siren", "brave firefighters", "sliding pole", "water hose", "emergency", "saving lives", "community heroes", "safety demonstration", "shiny red truck", "ladder", "uniform", "a day in the life", "admiring the equipment", "an educational tour", "respect and admiration", "a childhood dream", "an inspiring visit", "learning about fire safety", "a loud and exciting place"] },
             { title: "The Friendly Police Officer", keywords: ["helping people", "keeping us safe", "patrol car", "uniform", "lost and found", "directing traffic", "a reassuring presence", "a community helper", "asking for directions", "solving crimes", "a symbol of authority", "a friendly smile", "a sense of security", "an important job", "a trusted figure", "a positive role model", "a story of a helpful officer", "a safe neighbourhood", "a respected profession", "a protector of the community"] },
@@ -390,6 +402,7 @@ export const THEMES: Theme[] = [
     {
         name: "Science and Discovery",
         description: "This theme explores simple science concepts, famous inventors, and the thrill of discovery.",
+        suitableAges: "7-10",
         topics: [
             { title: "Building a Simple Machine", keywords: ["lever", "pulley", "wheel and axle", "a fun and hands-on experiment", "a lesson in physics and engineering", "a machine that makes work easier", "a sense of accomplishment and ingenuity", "a creative and clever invention", "a problem-solving challenge", "a simple but powerful concept", "a discovery of the principles of mechanics", "a fun and educational project", "a masterpiece of simple engineering", "a story of a machine that I designed and built myself", "a feeling of being a real inventor", "a practical and useful creation", "a fun and engaging way to learn about science", "a project that is both fun and challenging", "a proud and successful engineer", "a story of a machine that really works"] },
             { title: "A Volcano Experiment", keywords: ["baking soda", "vinegar", "a messy and exciting eruption", "a model of a powerful natural phenomenon", "a fun and dramatic science demonstration", "a lesson in chemistry and geology", "a foamy and bubbling reaction", "a sense of wonder and excitement", "a safe and fun way to learn about volcanoes", "a project that is sure to impress", "a story of a mini-disaster in the kitchen", "a memorable and fun experiment", "a hands-on and interactive learning experience", "a project that is both educational and entertaining", "a spectacular and colourful explosion", "a story of a science experiment that was a huge success", "a fun and easy way to learn about chemical reactions", "a project that is a blast (literally!)", "a budding young scientist", "a story of a volcanic eruption in my own home"] },
@@ -411,6 +424,7 @@ export const THEMES: Theme[] = [
     {
         name: "Myths and Legends",
         description: "This theme delves into the exciting world of myths, legends, and folklore from around the globe.",
+        suitableAges: "9-10",
         topics: [
             { title: "The Trojan Horse", keywords: ["ancient Greece", "a giant wooden horse", "a clever and deceptive plan", "a story of war and strategy", "a city that was thought to be impenetrable", "a lesson in not trusting your enemies (especially if they give you giant wooden horses)", "a story of a famous and legendary trick", "a feeling of suspense and excitement", "a symbol of cunning and deceit", "a story that is a classic of Western literature", "a story of a battle that was won with brains, not just brawn", "a story of a gift that was not what it seemed", "a story of a city that fell from within", "a story of a tale that has been told for thousands of years", "a story of a horse that was a work of art and a weapon of war", "a story of a horse that was a symbol of victory and defeat", "a story of a horse that was a legend", "a story of a horse that was simply brilliant", "a story of a horse that was a lot of trouble", "a story of a horse that was a true classic"] },
             { title: "King Arthur and the Sword in the Stone", keywords: ["a legendary king", "a magical sword", "a test of worthiness", "a story of destiny and leadership", "a young boy who was destined for greatness", "a lesson in the qualities of a true leader", "a story of a sword that could only be pulled by the rightful king", "a feeling of inspiration and admiration", "a symbol of power and justice", "a story that is a classic of British folklore", "a story of a king who was a symbol of hope and unity", "a story of a sword that was a gift from a magical being", "a story of a kingdom that was waiting for its true ruler", "a story of a tale that has been told for centuries", "a story of a sword that was a work of art and a symbol of power", "a story of a sword that was a legend", "a story of a sword that was simply magical", "a story of a sword that was a lot of trouble", "a story of a sword that was a true classic", "a story of a king who was a true hero"] },
@@ -427,6 +441,7 @@ export const THEMES: Theme[] = [
     {
         name: "Feelings and Emotions",
         description: "This theme helps children explore and understand their own feelings and the emotions of others.",
+        suitableAges: "6-10",
         topics: [
             { title: "A Happy Day", keywords: ["a day when everything goes right", "a feeling of joy and contentment", "a smile that never leaves my face", "a story of a day that is full of laughter and fun", "a lesson in appreciating the simple pleasures of life", "a feeling of warmth and happiness", "a memory that always makes me smile", "a story of a day that is a perfect 10", "a feeling of being on top of the world", "a day that is a gift", "a story of a day that is a celebration of life", "a day that is a treasure to be cherished", "a story of a day that is a reminder of all the good things in my life", "a day that is a source of strength and inspiration", "a story of a day that is simply beautiful", "a day that is a work of art", "a story of a day that is a symphony of happiness", "a day that is a dream come true", "a story of a day that is a masterpiece of joy", "a story of a day that is simply perfect"] },
             { title: "Feeling Sad", keywords: ["a day when I feel down", "a feeling of sadness and loneliness", "tears that won't stop falling", "a story of a time when I needed a hug and a kind word", "a lesson in understanding and accepting my own feelings", "a feeling of being lost and confused", "a memory of a time when I was comforted by a friend or family member", "a story of a day when the world seemed grey and colourless", "a feeling of having a heavy heart", "a day that is a struggle to get through", "a story of a day that is a journey through sadness", "a day that is a reminder that it's okay to not be okay", "a story of a day that is a testament to the power of love and support", "a day that is a source of growth and resilience", "a story of a day that is simply hard", "a day that is a work of art in its own way", "a story of a day that is a symphony of sorrow", "a day that is a reminder of the importance of kindness", "a story of a day that is a masterpiece of emotion", "a story of a day that is simply human"] },
@@ -463,6 +478,7 @@ export const THEMES: Theme[] = [
     {
         name: "World Cultures and Travel",
         description: "This theme is about exploring different countries, traditions, and the excitement of travel.",
+        suitableAges: "8-10",
         topics: [
             { title: "My First Aeroplane Trip", keywords: ["airport", "boarding pass", "window seat", "take-off", "a view of the clouds from above", "a feeling of excitement and adventure", "a journey to a new and unknown place", "a lesson in the wonders of modern technology", "a story of a first-time flyer's awe and wonder", "a feeling of being on top of the world", "a memory of a journey that started with a single step (onto a plane)", "a story of a trip that was a dream come true", "a feeling of leaving one world behind and entering another", "a day that is a gateway to new experiences", "a story of a journey that is a symbol of new beginnings", "a day that is a testament to the power of travel", "a story of a trip that is a source of inspiration and wanderlust", "a day that is simply magical", "a story of a trip that is a work of art in motion", "a story of a trip that is a masterpiece of engineering and human ambition"] },
             { title: "A Festival in Another Country", keywords: ["a colourful and vibrant celebration", "a tradition that is new and fascinating to me", "a story of a time when I experienced a different culture's joy and festivities", "a lesson in the diversity and beauty of the world", "a feeling of being a welcome guest in a foreign land", "a memory of a celebration that was a feast for the senses", "a story of a festival that was a symbol of a country's identity and spirit", "a feeling of connection to people from a different background", "a day that is a celebration of our shared humanity", "a story of a festival that is a journey through a new culture", "a day that is a reminder of the beauty of diversity", "a story of a festival that is a testament to the power of tradition", "a day that is a source of joy and understanding", "a story of a festival that is simply spectacular", "a day that is a work of art in motion", "a story of a festival that is a symphony of culture", "a day that is a reminder of the importance of being open to new experiences", "a story of a festival that is a masterpiece of celebration", "a story of a festival that is simply unforgettable"] },

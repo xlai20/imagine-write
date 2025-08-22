@@ -1,15 +1,24 @@
 import { THEMES } from './themes';
 
 export const generateDynamicWritingPrompt = (age: number): { aiPrompt: string; themeName: string; topicTitle: string; keywords: string[] } => {
-  // 1. Pick a random theme
-  const randomThemeIndex = Math.floor(Math.random() * THEMES.length);
-  const selectedTheme = THEMES[randomThemeIndex];
+  // 1. Filter themes suitable for the user's age
+  const suitableThemes = THEMES.filter(theme => {
+    const [minAge, maxAge] = theme.suitableAges.split('-').map(Number);
+    return age >= minAge && age <= maxAge;
+  });
 
-  // 2. Pick a random topic from that theme
+  // Use suitable themes, or fallback to all themes if none are found for the age
+  const themesToChooseFrom = suitableThemes.length > 0 ? suitableThemes : THEMES;
+
+  // 2. Pick a random theme from the suitable list
+  const randomThemeIndex = Math.floor(Math.random() * themesToChooseFrom.length);
+  const selectedTheme = themesToChooseFrom[randomThemeIndex];
+
+  // 3. Pick a random topic from that theme
   const randomTopicIndex = Math.floor(Math.random() * selectedTheme.topics.length);
   const selectedTopic = selectedTheme.topics[randomTopicIndex];
 
-  // 3. Construct the prompt for the AI
+  // 4. Construct the prompt for the AI
   const keywords = selectedTopic.keywords.join(', ');
   const prompt = `Generate a short, simple, and imaginative writing prompt for a ${age}-year-old child.
 Topic: "${selectedTopic.title}"

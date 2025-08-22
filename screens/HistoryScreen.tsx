@@ -1,14 +1,19 @@
 
 import React from 'react';
 import { useAppContext } from '../context/AppContext';
-import { Screen } from '../types';
+import { Screen, Story } from '../types';
 import StoryCard from '../components/StoryCard';
 import Button from '../components/common/Button';
 
 const HistoryScreen: React.FC = () => {
-  const { currentUser, stories, setCurrentScreen, logout } = useAppContext();
+  const { currentUser, stories, setCurrentScreen, logout, setCurrentStory } = useAppContext();
 
   const userStories = stories.filter(story => story.userId === currentUser?.id);
+
+  const handleStoryClick = (story: Story) => {
+    setCurrentStory(story);
+    setCurrentScreen(Screen.HISTORY_WRITING);
+  };
 
   return (
     <div className="min-h-screen p-6 md:p-10">
@@ -23,7 +28,7 @@ const HistoryScreen: React.FC = () => {
         {userStories.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {userStories.map(story => (
-                    <StoryCard key={story.id} story={story} onClick={() => alert('Viewing story details coming soon!')}/>
+                    <StoryCard key={story.id} story={story} onClick={() => handleStoryClick(story)}/>
                 ))}
             </div>
         ) : (

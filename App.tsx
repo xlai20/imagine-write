@@ -8,6 +8,7 @@ import WritingScreen from './screens/WritingScreen';
 import FeedbackScreen from './screens/FeedbackScreen';
 import HistoryScreen from './screens/HistoryScreen';
 import { Screen } from './types';
+import HistoryWritingScreen from './screens/HistoryWritingScreen';
 
 const App: React.FC = () => {
   const { currentScreen } = useAppContext();
@@ -26,6 +27,8 @@ const App: React.FC = () => {
         return <FeedbackScreen />;
       case Screen.HISTORY:
         return <HistoryScreen />;
+      case Screen.HISTORY_WRITING:
+        return <HistoryWritingScreen />;
       default:
         return <ProfileSelectorScreen />;
     }

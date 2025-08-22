@@ -45,4 +45,5 @@ export enum Screen {
   WRITING,
   FEEDBACK,
   HISTORY,
+  HISTORY_WRITING,
 }

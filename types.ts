@@ -40,6 +40,7 @@ export interface Feedback {
 
 export enum Screen {
   PROFILE_SELECTOR,
+  WELCOME,
   DASHBOARD,
   WRITING,
   FEEDBACK,

@@ -2,6 +2,7 @@
 import React from 'react';
 import { useAppContext } from './context/AppContext';
 import ProfileSelectorScreen from './screens/ProfileSelectorScreen';
+import WelcomeScreen from './screens/WelcomeScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import WritingScreen from './screens/WritingScreen';
 import FeedbackScreen from './screens/FeedbackScreen';
@@ -15,6 +16,8 @@ const App: React.FC = () => {
     switch (currentScreen) {
       case Screen.PROFILE_SELECTOR:
         return <ProfileSelectorScreen />;
+      case Screen.WELCOME:
+        return <WelcomeScreen />;
       case Screen.DASHBOARD:
         return <DashboardScreen />;
       case Screen.WRITING:

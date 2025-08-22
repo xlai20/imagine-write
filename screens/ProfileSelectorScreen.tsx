@@ -9,7 +9,7 @@ const ProfileSelectorScreen: React.FC = () => {
 
   const handleProfileSelect = (user: User) => {
     setCurrentUser(user);
-    setCurrentScreen(Screen.DASHBOARD);
+    setCurrentScreen(Screen.WELCOME);
   };
 
   return (

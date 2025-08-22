@@ -83,9 +83,11 @@ const DashboardScreen: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col p-6 lg:p-8">
       <header className="flex justify-between items-center w-full">
-        <h2 className="text-3xl font-bold text-text-dark">Hello, {currentUser?.name}!</h2>
+        <Button variant="text-blue" onClick={() => setCurrentScreen(Screen.WELCOME)}>
+          &larr; Back to Menu
+        </Button>
         <Button variant="text-blue" onClick={() => setCurrentScreen(Screen.HISTORY)}>
-          My Stories
+          My Stories &rarr;
         </Button>
       </header>
 

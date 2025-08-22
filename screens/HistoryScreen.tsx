@@ -15,7 +15,7 @@ const HistoryScreen: React.FC = () => {
         <header className="flex justify-between items-center mb-12">
             <h1 className="text-5xl font-bold text-text-dark">My Stories</h1>
             <div>
-              <Button variant="text-blue" onClick={() => setCurrentScreen(Screen.DASHBOARD)} className="mr-4">Dashboard</Button>
+              <Button variant="text-blue" onClick={() => setCurrentScreen(Screen.WELCOME)} className="mr-4">Back to Menu</Button>
               <Button variant="red" onClick={logout}>Switch Profile</Button>
             </div>
         </header>

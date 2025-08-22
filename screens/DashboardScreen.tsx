@@ -18,38 +18,59 @@ const DashboardScreen: React.FC = () => {
   const { currentUser, setCurrentScreen, setCurrentStory } = useAppContext();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [promptData, setPromptData] = useState<PromptData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true); // For loading the initial text prompt
+  const [imageLoading, setImageLoading] = useState<boolean>(false); // For loading the image
 
-  const fetchPromptAndImage = useCallback(async () => {
+  const fetchNewAdventure = useCallback(async () => {
     if (!currentUser) return;
+
     setLoading(true);
+    setImageLoading(false);
+    setImageUrl(null);
+    setPromptData(null);
+
+    let promptForImage = '';
+    let generatedPromptData: PromptData;
+
     try {
-      const writingPromptData = await generateWritingPrompt(currentUser.age);
-      setPromptData(writingPromptData);
-      const generatedImageUrl = await generateImage(writingPromptData.prompt, currentUser.age);
-      setImageUrl(generatedImageUrl);
+      generatedPromptData = await generateWritingPrompt(currentUser.age);
+      setPromptData(generatedPromptData);
+      promptForImage = generatedPromptData.prompt;
     } catch (error) {
-      console.error("Failed to load prompt and image", error);
-      setImageUrl('https://picsum.photos/800/500'); // Fallback image
-      setPromptData({
+      console.error("Failed to load prompt", error);
+      generatedPromptData = {
         prompt: 'A magical castle in the clouds.',
         theme: 'Fantasy & Adventure',
         topic: 'Castle in the Sky',
         keywords: ['castle', 'clouds', 'magic', 'fly', 'secret']
-      });
+      };
+      setPromptData(generatedPromptData);
+      promptForImage = generatedPromptData.prompt;
     } finally {
       setLoading(false);
+    }
+    
+    if (promptForImage) {
+      setImageLoading(true);
+      try {
+        const generatedImageUrl = await generateImage(promptForImage, currentUser.age);
+        setImageUrl(generatedImageUrl);
+      } catch (error) {
+        console.error("Failed to load image", error);
+        setImageUrl('https://picsum.photos/800/500');
+      } finally {
+        setImageLoading(false);
+      }
     }
   }, [currentUser]);
 
   useEffect(() => {
-    fetchPromptAndImage();
-  }, [fetchPromptAndImage]);
+    fetchNewAdventure();
+  }, [fetchNewAdventure]);
 
   const handleStartWriting = () => {
     if (imageUrl && promptData && currentUser) {
       setCurrentStory({ 
-          // Temporary story object
           id: 0,
           userId: currentUser.id,
           date: '',
@@ -92,49 +113,61 @@ const DashboardScreen: React.FC = () => {
       </header>
 
       <main className="flex-grow flex flex-col items-center justify-center text-center mt-8">
-        <div className="w-full max-w-4xl bg-white/50 rounded-3xl p-4 shadow-md">
-          {loading ? (
-            <div className="w-full aspect-[16/9] flex flex-col items-center justify-center bg-gray-200 rounded-2xl">
-              <LoadingAnimation text="Imagining your next adventure..." />
+        {loading ? (
+            <div className="w-full max-w-4xl">
+                 <div className="bg-white/50 rounded-3xl p-4 shadow-md">
+                    <div className="w-full aspect-[16/9] flex flex-col items-center justify-center bg-gray-200 rounded-2xl">
+                        <LoadingAnimation text="Imagining your next adventure..." />
+                    </div>
+                 </div>
             </div>
-          ) : (
-            <img src={imageUrl ?? ''} alt={promptData?.prompt ?? 'AI-generated writing prompt'} className="w-full aspect-[16/9] object-cover rounded-2xl"/>
-          )}
-        </div>
+        ) : (
+            <>
+                <div className="w-full max-w-4xl bg-white/50 rounded-3xl p-4 shadow-md">
+                    {imageLoading ? (
+                        <div className="w-full aspect-[16/9] flex flex-col items-center justify-center bg-gray-200 rounded-2xl">
+                            <LoadingAnimation text="Painting your picture..." />
+                        </div>
+                    ) : (
+                        <img src={imageUrl ?? ''} alt={promptData?.prompt ?? 'AI-generated writing prompt'} className="w-full aspect-[16/9] object-cover rounded-2xl"/>
+                    )}
+                </div>
 
-        {!loading && promptData && (
-            <div className="mt-6 text-center max-w-4xl w-full">
-                <div className="inline-block bg-primary-blue/10 rounded-full px-5 py-1 mb-3 border-2 border-primary-blue/20">
-                    <p className="font-sans text-sm font-bold text-primary-blue tracking-wider uppercase">{promptData.theme}</p>
+                {promptData && (
+                    <div className="mt-6 text-center max-w-4xl w-full">
+                        <div className="inline-block bg-primary-blue/10 rounded-full px-5 py-1 mb-3 border-2 border-primary-blue/20">
+                            <p className="font-sans text-sm font-bold text-primary-blue tracking-wider uppercase">{promptData.theme}</p>
+                        </div>
+                        <h1 className="font-patrickHand text-4xl md:text-5xl text-text-dark px-4">{promptData.topic}</h1>
+                        <div className="mt-4 flex flex-wrap justify-center gap-2 px-4">
+                          {promptData.keywords.map((keyword) => (
+                            <span key={keyword} className="bg-positive-green/10 text-positive-green font-semibold px-3 py-1 rounded-full text-sm border-2 border-positive-green/20">
+                              {keyword}
+                            </span>
+                          ))}
+                        </div>
+                    </div>
+                )}
+
+                <div className="relative mt-8 flex items-center justify-center gap-4">
+                    <Button variant="text-blue" onClick={fetchNewAdventure} disabled={loading || imageLoading}>
+                        Imagine Again~
+                    </Button>
+                    <Button variant="red" onClick={handleStartWriting} disabled={loading || imageLoading || !imageUrl}>
+                        Start Writing!
+                    </Button>
+                    {[...Array(5)].map((_, i) => (
+                         <StarIcon key={i} className="absolute text-star-yellow/80 fill-current animate-pulse -z-10" style={{
+                            width: `${Math.random() * 20 + 15}px`,
+                            top: `${Math.random() * 120 - 60}%`,
+                            left: `${Math.random() * 120 - 10}%`,
+                            animationDelay: `${Math.random()}s`,
+                            opacity: Math.random() * 0.5 + 0.5,
+                         }} points={4} />
+                    ))}
                 </div>
-                <h1 className="font-patrickHand text-4xl md:text-5xl text-text-dark px-4">{promptData.topic}</h1>
-                <div className="mt-4 flex flex-wrap justify-center gap-2 px-4">
-                  {promptData.keywords.map((keyword) => (
-                    <span key={keyword} className="bg-positive-green/10 text-positive-green font-semibold px-3 py-1 rounded-full text-sm border-2 border-positive-green/20">
-                      {keyword}
-                    </span>
-                  ))}
-                </div>
-            </div>
+            </>
         )}
-
-        <div className="relative mt-8 flex items-center justify-center gap-4">
-            <Button variant="text-blue" onClick={fetchPromptAndImage} disabled={loading}>
-                Imagine Again~
-            </Button>
-            <Button variant="red" onClick={handleStartWriting} disabled={loading}>
-                Start Writing!
-            </Button>
-            {[...Array(5)].map((_, i) => (
-                 <StarIcon key={i} className="absolute text-star-yellow/80 fill-current animate-pulse -z-10" style={{
-                    width: `${Math.random() * 20 + 15}px`,
-                    top: `${Math.random() * 120 - 60}%`,
-                    left: `${Math.random() * 120 - 10}%`,
-                    animationDelay: `${Math.random()}s`,
-                    opacity: Math.random() * 0.5 + 0.5,
-                 }} points={4} />
-            ))}
-        </div>
       </main>
     </div>
   );

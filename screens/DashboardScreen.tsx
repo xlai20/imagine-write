@@ -3,9 +3,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { Screen } from '../types';
 import Button from '../components/common/Button';
-import Spinner from '../components/common/Spinner';
 import { generateWritingPrompt, generateImage } from '../services/geminiService';
 import StarIcon from '../components/icons/StarIcon';
+import LoadingAnimation from '../components/common/LoadingAnimation';
 
 interface PromptData {
   prompt: string;
@@ -93,7 +93,7 @@ const DashboardScreen: React.FC = () => {
         <div className="w-full max-w-4xl bg-white/50 rounded-3xl p-4 shadow-md">
           {loading ? (
             <div className="w-full aspect-[16/9] flex flex-col items-center justify-center bg-gray-200 rounded-2xl">
-              <Spinner text="Imagining your prompt..." />
+              <LoadingAnimation text="Imagining your next adventure..." />
             </div>
           ) : (
             <img src={imageUrl ?? ''} alt={promptData?.prompt ?? 'AI-generated writing prompt'} className="w-full aspect-[16/9] object-cover rounded-2xl"/>
@@ -116,14 +116,17 @@ const DashboardScreen: React.FC = () => {
             </div>
         )}
 
-        <div className="relative mt-8">
+        <div className="relative mt-8 flex items-center justify-center gap-4">
+            <Button variant="text-blue" onClick={fetchPromptAndImage} disabled={loading}>
+                Imagine Again~
+            </Button>
             <Button variant="red" onClick={handleStartWriting} disabled={loading}>
                 Start Writing!
             </Button>
             {[...Array(5)].map((_, i) => (
-                 <StarIcon key={i} className="absolute text-star-yellow/80 fill-current animate-pulse" style={{
-                    width: `${Math.random() * 16 + 12}px`,
-                    top: `${Math.random() * 100 - 50}%`,
+                 <StarIcon key={i} className="absolute text-star-yellow/80 fill-current animate-pulse -z-10" style={{
+                    width: `${Math.random() * 20 + 15}px`,
+                    top: `${Math.random() * 120 - 60}%`,
                     left: `${Math.random() * 120 - 10}%`,
                     animationDelay: `${Math.random()}s`,
                     opacity: Math.random() * 0.5 + 0.5,

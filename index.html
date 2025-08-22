@@ -27,6 +27,24 @@
             },
             boxShadow: {
               'inner-subtle': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)',
+            },
+            keyframes: {
+              draw: {
+                'to': { strokeDashoffset: '0' },
+              },
+              fadeInOut: {
+                '0%, 100%': { opacity: '0' },
+                '50%': { opacity: '1' },
+              },
+              pop: {
+                '0%, 100%': { transform: 'scale(0)', opacity: '0' },
+                '50%': { transform: 'scale(1)', opacity: '1' },
+              }
+            },
+            animation: {
+              draw: 'draw 2s ease-in-out forwards',
+              fadeInOut: 'fadeInOut 1.8s infinite ease-in-out',
+              pop: 'pop 1.2s ease-in-out infinite',
             }
           }
         }

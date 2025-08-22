@@ -43,7 +43,7 @@ const WritingScreen: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-background-cream">
+    <div className="flex flex-col md:flex-row min-h-screen">
       {isLoading && (
         <div className="absolute inset-0 bg-black/30 flex items-center justify-center z-50">
             <Spinner text="Analyzing your story..." />

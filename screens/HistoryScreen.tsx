@@ -11,7 +11,7 @@ const HistoryScreen: React.FC = () => {
   const userStories = stories.filter(story => story.userId === currentUser?.id);
 
   return (
-    <div className="min-h-screen bg-background-cream p-6 md:p-10">
+    <div className="min-h-screen p-6 md:p-10">
         <header className="flex justify-between items-center mb-12">
             <h1 className="text-5xl font-bold text-text-dark">My Stories</h1>
             <div>

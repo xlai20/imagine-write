@@ -13,7 +13,7 @@ const ProfileSelectorScreen: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-background-cream">
+    <div className="min-h-screen flex flex-col items-center justify-center p-8">
       <h1 className="text-5xl md:text-[48px] font-bold text-text-dark mb-16">
         Who's Writing?
       </h1>

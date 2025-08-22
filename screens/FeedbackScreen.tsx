@@ -38,7 +38,7 @@ const FeedbackScreen: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background-cream p-4 sm:p-6 md:p-10">
+    <div className="min-h-screen p-4 sm:p-6 md:p-10">
       <main className="max-w-5xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-text-dark text-center mb-8 font-patrickHand">Tutor's Feedback</h1>
         

@@ -14,7 +14,6 @@
         theme: {
           extend: {
             colors: {
-              'background-cream': '#FFF8E8',
               'primary-red': '#E53935',
               'primary-blue': '#1E88E5',
               'positive-green': '#43A047',
@@ -50,6 +49,22 @@
         }
       }
     </script>
+    <style>
+      @keyframes gentle-float {
+        0% { background-position: 0% 0%; }
+        50% { background-position: 5% 10%; }
+        100% { background-position: 0% 0%; }
+      }
+    
+      body.bg-background-cream {
+        /* Removed the solid background-color to let the animation shine */
+        background-image:
+          radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%),
+          url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 150 150"><g fill-opacity="0.4" fill="%23EADDC5"><path d="M75 15 L82.5 45 L112.5 45 L87.5 65 L97.5 95 L75 75 L52.5 95 L62.5 65 L37.5 45 L67.5 45 Z" transform="scale(0.2) rotate(15, 75, 55) translate(120, 80)"/><circle cx="130" cy="115" r="3"/><path d="M20 70 Q 15 75, 20 80 T 20 90" stroke="%23EADDC5" stroke-width="1.5" fill="none" stroke-opacity="0.4"/><circle cx="30" cy="25" r="2"/></g></svg>');
+        background-size: cover, 200px 200px;
+        animation: gentle-float 60s ease-in-out infinite;
+      }
+    </style>
   <script type="importmap">
 {
   "imports": {
